@@ -5,7 +5,9 @@
 #  qualquer hipótese. Esta licença está baseada em estudos sobre a Lei
 #  Brasileira de Direitos Autorais (Lei 9.610/1998) e Tratados Internacionais
 #  sobre Propriedade Intelectual.
+#
 
+#
 #
 #
 from sqlalchemy import Column
@@ -105,7 +107,7 @@ allocations = Table(
 
 
 def start_mappers():
-    lines_mapper = mapper(OrderLine, order_lines)
+    lines_mapper = mapper_registry.map_imperatively(OrderLine, order_lines)
     mapper(
         Batch,
         batches,
