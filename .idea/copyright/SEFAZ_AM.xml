@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="keyword" value="Direitos autorais" />
+    <option name="notice" value="Direitos autorais (c) &amp;#36;originalComment.match(&quot;Copyright \(c\) (\d+)&quot;, 1, &quot;-&quot;)&amp;#36;today.year. Secretaria do Estado da Fazenda do Estado do Amazonas – SEFAZ/AM.&#10;&#10;Proibida a cópia parcial ou total dos arquivos de código fonte deste projeto.&#10;Proibido o uso comercial ou com finalidades lucrativas em qualquer hipótese.&#10;Esta licença está baseada em estudos sobre a Lei Brasileira de Direitos Autorais (Lei 9.610/1998) e Tratados Internacionais sobre Propriedade Intelectual.&#10;" />
+    <option name="myName" value="SEFAZ/AM" />
+  </copyright>
+</component>
