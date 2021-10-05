@@ -1,0 +1,5 @@
+setuptools>=46.4.0
+wheel
+toml
+pip-tools
+sqlalchemy
