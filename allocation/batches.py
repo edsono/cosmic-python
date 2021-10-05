@@ -5,6 +5,7 @@
 #  qualquer hipótese. Esta licença está baseada em estudos sobre a Lei
 #  Brasileira de Direitos Autorais (Lei 9.610/1998) e Tratados Internacionais
 #  sobre Propriedade Intelectual.
+#
 
 #
 from dataclasses import dataclass
@@ -32,7 +33,7 @@ class Batch:
         self.reference = ref
         self.sku = sku
         self.eta = eta
-        self.quantity = qty
+        self._purchased_quantity = qty
         self._allocations: Set[OrderLine] = set()
 
     def allocate(self, line: OrderLine):
@@ -50,7 +51,7 @@ class Batch:
 
     @property
     def available_quantity(self) -> int:
-        return self.quantity - self.allocated_quantity
+        return self._purchased_quantity - self.allocated_quantity
 
     def can_allocate(self, line: OrderLine) -> bool:
         return self.sku == line.sku and self.available_quantity >= line.qty
