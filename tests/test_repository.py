@@ -1,11 +1,10 @@
-from allocation import Batch
-from allocation import OrderLine
-from allocation import repository
+from allocation.adapters import repositories
+from allocation.domain import models
 
 
 def test_repository_can_save_a_batch(session):
-    batch = Batch("batch1", "RUSTY-SOAPDISH", 100, eta=None)
-    repo = repository.SqlAlchemyRepository(session)
+    batch = models.Batch("batch1", "RUSTY-SOAPDISH", 100, eta=None)
+    repo = repositories.SqlAlchemyRepository(session)
     repo.add(batch)
     session.commit()
     # noinspection SqlNoDataSourceInspection
@@ -58,12 +57,12 @@ def test_repository_can_retrieve_a_batch_with_allocations(session):
     batch1_id = insert_batch(session, "batch1")
     insert_batch(session, "batch2")
     insert_allocation(session, orderline_id, batch1_id)
-    repo = repository.SqlAlchemyRepository(session)
+    repo = repositories.SqlAlchemyRepository(session)
     retrieved = repo.get("batch1")
-    expected = Batch("batch1", "GENERIC-SOFA", 100, eta=None)
+    expected = models.Batch("batch1", "GENERIC-SOFA", 100, eta=None)
     assert retrieved == expected  # Batch.__eq__ only compares reference
     assert retrieved.sku == expected.sku
     assert retrieved._purchased_quantity == expected._purchased_quantity
     assert retrieved._allocations == {
-        OrderLine("order1", "GENERIC-SOFA", 12),
+        models.OrderLine("order1", "GENERIC-SOFA", 12),
     }

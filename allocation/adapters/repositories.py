@@ -1,15 +1,6 @@
 from typing import List
-from typing import Protocol
 
-from .batches import Batch
-
-
-class BatchRepository(Protocol):
-    def add(self, batch: Batch):
-        """to put a new item in the repository"""
-
-    def get(self, reference) -> Batch:
-        """to get a item from the repository"""
+from allocation.domain import models
 
 
 # class FakeRepository:
@@ -26,15 +17,16 @@ class BatchRepository(Protocol):
 #         return list(self._batches)
 #
 
+
 class SqlAlchemyRepository:
     def __init__(self, session):
         self.session = session
 
-    def add(self, batch: Batch):
+    def add(self, batch: models.Batch):
         self.session.add(batch)
 
-    def get(self, reference) -> Batch:
-        return self.session.query(Batch).filter_by(reference=reference).one()
+    def get(self, reference) -> models.Batch:
+        return self.session.query(models.Batch).filter_by(reference=reference).one()
 
-    def list(self) -> List[Batch]:
-        return self.session.query(Batch).all()
+    def list(self) -> List[models.Batch]:
+        return self.session.query(models.Batch).all()

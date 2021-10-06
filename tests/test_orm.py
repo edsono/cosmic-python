@@ -1,4 +1,4 @@
-import allocation
+from allocation.domain import models
 
 
 def test_orderline_mapper_can_load_lines(session):
@@ -11,15 +11,15 @@ def test_orderline_mapper_can_load_lines(session):
         """)
 
     expected = [
-        allocation.OrderLine("order1", "RED-CHAIR", 12),
-        allocation.OrderLine("order1", "RED-TABLE", 13),
-        allocation.OrderLine("order2", "BLUE-LIPSTICK", 14),
+        models.OrderLine("order1", "RED-CHAIR", 12),
+        models.OrderLine("order1", "RED-TABLE", 13),
+        models.OrderLine("order2", "BLUE-LIPSTICK", 14),
     ]
-    assert session.query(allocation.OrderLine).all() == expected
+    assert session.query(models.OrderLine).all() == expected
 
 
 def test_orderline_mapper_can_save_lines(session):
-    new_line = allocation.OrderLine("order1", "DECORATIVE-WIDGET", 12)
+    new_line = models.OrderLine("order1", "DECORATIVE-WIDGET", 12)
     session.add(new_line)
     session.commit()
     # noinspection SqlNoDataSourceInspection

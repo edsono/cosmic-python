@@ -9,8 +9,7 @@ from sqlalchemy.orm import mapper
 from sqlalchemy.orm import registry
 from sqlalchemy.orm import relationship
 
-from allocation import Batch
-from allocation import OrderLine
+from allocation.domain import models
 
 mapper_registry = registry()
 metadata = mapper_registry.metadata
@@ -20,6 +19,7 @@ DEL_ATTR = object()
 
 # https://github.com/cosmicpython/code/issues/17
 class FrozenDataclassInstrumentationManager(InstrumentationManager):
+    # noinspection PyAttributeOutsideInit
     def manage(self, class_, manager):
         self.originals = {}
         setattr(class_, "_sa_class_manager", manager)
@@ -67,7 +67,7 @@ class FrozenDataclassInstrumentationManager(InstrumentationManager):
 
 
 # noinspection Mypy
-OrderLine.__sa_instrumentation_manager__ = FrozenDataclassInstrumentationManager  # type: ignore
+models.OrderLine.__sa_instrumentation_manager__ = FrozenDataclassInstrumentationManager  # type: ignore
 
 order_lines = Table(
     'order_lines', metadata,
@@ -95,9 +95,9 @@ allocations = Table(
 
 
 def start_mappers():
-    lines_mapper = mapper_registry.map_imperatively(OrderLine, order_lines)
+    lines_mapper = mapper_registry.map_imperatively(models.OrderLine, order_lines)
     mapper(
-        Batch,
+        models.Batch,
         batches,
         properties={
             "_allocations": relationship(
